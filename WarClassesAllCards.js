@@ -91,13 +91,19 @@ class Game{
         let i = 1;
         let player1Play = [];
         let player2Play = [];
+        let resultTest = document.getElementById("results");
         while(this.player1.hand.length > 0 && this.player2.hand.length > 0){
-            console.log("\nRound " + (i++));
+            console.log("\nRound " + (i));
+            resultTest.innerHTML += "<p>Round " + i++ + "<\p>";
             player1Play.unshift(this.player1.playCard());
             player2Play.unshift(this.player2.playCard());
             console.log(`Player 1 -- ${player1Play[0].Value} ${player1Play[0].Suit}\nPlayer 2 -- ${player2Play[0].Value} ${player2Play[0].Suit}`);
+            resultTest.innerHTML += "<p>Player 1 -- " + player1Play[0].Value + " " + player1Play[0].Suit + "<\p>"; 
+            resultTest.innerHTML += "<p>Player 2 -- " + player2Play[0].Value + " " + player2Play[0].Suit + "<\p>";
+            
             if(player1Play[0].Strength < player2Play[0].Strength){
                 console.log("player 2 wins round");
+                resultTest.innerHTML += "<p>player 2 wins round<\p>";
                 this.player2.addPoint();
                 while(player1Play.length > 0 && player2Play.length > 0){
                     this.player2.addCard(player2Play.pop());
@@ -105,6 +111,7 @@ class Game{
                 }
             } else if (player1Play[0].Strength > player2Play[0].Strength){
                 console.log("player 1 wins round");
+                resultTest.innerHTML +=  "<p>player 1 wins round<\p>";
                 this.player1.addPoint();
                 while(player1Play.length > 0 && player2Play.length > 0){
                     this.player1.addCard(player1Play.pop());
@@ -116,12 +123,19 @@ class Game{
                 player2Play.unshift(this.player2.playCard());
             }
             console.log(`Score stands at ${this.player1.score} - ${this.player2.score}`);
+            resultTest.innerHTML += `<p>Score stands at ${this.player1.score} - ${this.player2.score}<\p><br>`;
         }
         //determines the winner of the game
+        const winner = document.getElementById("winner");
+        winner.innerHTML = "<p style='text-align: center'>" + --i + " rounds were played</p>"
         if(this.player1.hand.length === 0){
-            console.log(`\n\nPlayer 1 has run out of cards.\n\nPlayer 2 wins the game ${this.player1.score} to ${this.player2.score}.`)
+            console.log(`\n\nPlayer 1 has run out of cards.\n\nPlayer 2 wins the game ${this.player1.score} to ${this.player2.score}.`);
+            winner.innerHTML += `<p style='text-align: center'>Player 1 has run out of cards.  Player 2 wins the game ${this.player1.score} to ${this.player2.score}.<\p>`;
+        } else if (this.player2.hand.length === 0) {
+            console.log(`\n\nPlayer 2 has run out of cards.\n\nPlayer 1 wins the game ${this.player1.score} to ${this.player2.score}.`);
+            winner.innerHTML += `<p style='text-align: center'>Player 2 has run out of cards.   Player 1 wins the game ${this.player1.score} to ${this.player2.score}.<\p>`;
         } else {
-            console.log(`\n\nPlayer 2 has run out of cards.\n\nPlayer 1 wins the game ${this.player1.score} to ${this.player2.score}.`)
+            winner.innerHTML += `The Score stands at ${this.player1.score} to ${this.player2.score}.`
         }
     }
 }
