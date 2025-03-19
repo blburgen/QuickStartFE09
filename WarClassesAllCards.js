@@ -142,6 +142,6 @@ class Game{
         }
     }
 }
-
-let newGame = new Game();
-newGame.playWar();
+let newBtn = document.getElementById("newGame");
+newBtn.addEventListener("click", () => {let newGame = new Game();
+    newGame.playWar();})
